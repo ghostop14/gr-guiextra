@@ -1,0 +1,47 @@
+id: guiextra_graphicitem
+label: QT GUI Graphic Item
+category: '[GUI Extra]'
+
+parameters:
+-   id: file
+    label: File
+    dtype: file_open
+-   id: scaleImage
+    label: Scale Image
+    dtype: bool
+    default: 'False'
+    hide: part
+-   id: fixedsize
+    label: Fixed Size
+    dtype: bool
+    default: 'False'
+    hide: ${ 'all' if scaleImage else 'part' }
+-   id: width
+    label: Width
+    dtype: int
+    default: '0'
+    hide: ${ 'part' if fixedsize and not scaleImage else 'all' }
+-   id: height
+    label: height
+    dtype: int
+    default: '0'
+    hide: ${ 'part' if fixedsize and not scaleImage  else 'all' }
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
+
+templates:
+    imports: import guiextra
+    make: |-
+        <%
+            win = 'self._%s_win'%id
+        %>\
+        ${win} = guiextra.GrGraphicItem(${file},${scaleImage},${fixedsize},${width},${height})
+        self._${id}_win = ${win}
+        ${gui_hint() % win}
+
+documentation: |-
+    This block displays the selected graphic item at its original scale.
+
+file_format: 1
