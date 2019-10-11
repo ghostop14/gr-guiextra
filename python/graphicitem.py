@@ -28,8 +28,12 @@ from PyQt5.QtCore import QSize
 import os
 import sys
 
-class GrGraphicItem(QLabel):
+from gnuradio import gr
+import pmt
+
+class GrGraphicItem(gr.sync_block, QLabel):
     def __init__(self,imageFile,scaleImage=True,fixedSize=False,setWidth=0,setHeight=0):
+        gr.sync_block.__init__(self, name = "GrGraphicsItem", in_sig = None, out_sig = None)
         QLabel.__init__(self)
         
         if not os.path.isfile(imageFile):
@@ -47,6 +51,32 @@ class GrGraphicItem(QLabel):
         self.setWidth = setWidth
         self.setHeight = setHeight
         super().setPixmap(self.pixmap)
+        
+        self.message_port_register_in(pmt.intern("filename"))
+        self.set_msg_handler(pmt.intern("filename"), self.msgHandler)   
+        
+    def msgHandler(self, msg):
+        try:    
+            newVal = pmt.to_python(pmt.cdr(msg))
+
+            if type(newVal) == str:
+                if not os.path.isfile(imageFile):
+                    print("[GrGraphicsItem] ERROR: Unable to find file " + imageFile)
+                    return
+                
+                try:
+                    self.pixmap = QPixmap(imageFile)
+                except OSError as e:
+                    print("[GrGraphicsItem] ERROR: " + e.strerror)
+                    return
+                
+                super().setPixmap(self.pixmap)
+                update()
+            else:
+                print("[GrGraphicsItem] Error: Value received was not an int or a bool: %s" % str(e))
+                
+        except Exception as e:
+            print("[GrGraphicsItem] Error with message conversion: %s" % str(e))
 
     def minimumSizeHint(self):
         return QSize(self.pixmap.width(),self.pixmap.height())

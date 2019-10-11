@@ -31,6 +31,11 @@ parameters:
     dtype: gui_hint
     hide: part
 
+inputs:
+-   domain: message
+    id: filename
+    optional: true
+    
 templates:
     imports: import guiextra
     make: |-
@@ -42,6 +47,6 @@ templates:
         ${gui_hint() % win}
 
 documentation: |-
-    This block displays the selected graphic item at its original scale.
+    This block displays the selected graphic item at its original scale.  You can pass a filename as a string in a message to change the image on the fly.
 
 file_format: 1
