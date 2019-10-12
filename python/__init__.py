@@ -42,3 +42,4 @@ from .digitalnumbercontrol import MsgDigitalNumberControl
 from .dialcontrol import GrDialControl
 from .ledindicator import GrLEDIndicator
 from .graphicitem import GrGraphicItem
+from .levelgauge import GrLevelGauge

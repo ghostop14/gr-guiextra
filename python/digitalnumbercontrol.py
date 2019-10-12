@@ -25,6 +25,7 @@ from PyQt5.QtGui import QPainter, QPixmap,  QFont,  QFontMetrics, QBrush, QColor
 from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt as Qtc
+from PyQt5.QtCore import pyqtSignal
 
 from gnuradio import gr
 import pmt
@@ -68,8 +69,16 @@ class LabeledDigitalNumberControl(QFrame):
         return self.numberControl.getFrequency()
         
 class DigitalNumberControl(QFrame):
+    # Notifies to avoid thread conflicts on paints
+    updateInt = pyqtSignal(int)
+    updateFloat = pyqtSignal(float)
+    
     def __init__(self, minFreqHz = 0, maxFreqHz=6000000000, parent=None,  ThousandsSeparator=',', backgroundColor='black', fontColor='white', clickCallback=None):
         QFrame.__init__(self, parent)
+        
+        self.updateInt.connect(self.onUpdateInt)
+        self.updateFloat.connect(self.onUpdateFloat)
+        
         self.minFreq = int(minFreqHz)
         self.maxFreq = int(maxFreqHz)
         self.numDigitsInFreq = len(str(maxFreqHz))
@@ -239,12 +248,25 @@ class DigitalNumberControl(QFrame):
         astring = astring[::-1] 
         return astring 
         
-    def setFrequency(self, newFreq):
+    def onUpdateInt(self,newFreq): 
         if (newFreq >= self.minFreq) and (newFreq <= self.maxFreq): 
             self.curFreq = int(newFreq)
             
         #print("Setting frequency: " + str(newFreq))
         self.update()
+                                 
+    def onUpdateFloat(self,newFreq): 
+        if (newFreq >= self.minFreq) and (newFreq <= self.maxFreq): 
+            self.curFreq = int(newFreq)
+            
+        #print("Setting frequency: " + str(newFreq))
+        self.update()
+        
+    def setFrequency(self, newFreq):
+        if (type(newFreq) == int):
+            self.updateInt.emit(newFreq)
+        else:
+            self.updateFloat.emit(newFreq)
         
     def getFrequency(self):
         return self.curFreq

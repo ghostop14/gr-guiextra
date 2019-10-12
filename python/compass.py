@@ -219,7 +219,6 @@ class Compass(QWidget):
     def angle(self):
         return self._angle
     
-    @pyqtSlot(float)
     def change_angle(self, angle):
         if angle != self._angle:
             if self.debug:

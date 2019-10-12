@@ -41,6 +41,7 @@ GR_PYTHON_INSTALL(
     dialcontrol.py
     ledindicator.py
     graphicitem.py
+    levelgauge.py
     DESTINATION ${GR_PYTHON_DIR}/guiextra
 )
 

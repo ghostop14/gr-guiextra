@@ -29,5 +29,6 @@ install(FILES
     guiextra_ledindicator.block.yml
     guiextra_graphicitem.block.yml
     guiextra_appbackground.block.yml
+    guiextra_levelgauge.block.yml
     DESTINATION share/gnuradio/grc/blocks
 )

@@ -20,14 +20,13 @@
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
 #
-from PyQt5.QtWidgets import QFrame, QWidget, QVBoxLayout, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QFrame, QWidget, QHBoxLayout, QVBoxLayout, QLabel
 from PyQt5.QtGui import QPainter, QPixmap,  QBrush, QColor, QPen
 from PyQt5 import Qt
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt as Qtc
 from PyQt5.QtCore import QSize, QPoint, QRect
 from PyQt5.QtGui import QPixmap,QPainter, QPainterPath,QLinearGradient, QRadialGradient, QConicalGradient
-from PyQt5.Qt import QHBoxLayout
 
 from gnuradio import gr
 import pmt

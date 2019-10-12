@@ -45,7 +45,7 @@ class LabeledDialControl(QFrame):
             textstr = self.buildTextStr(defaultvalue*self.scaleFactor)
             self.lblcontrol.setText(textstr)
 
-        if len(lbl) > 0:
+        if len(lbl) > 0 or self.showvalue:
             self.hasLabel = True
             layout.addWidget(self.lblcontrol)
         else:
@@ -73,12 +73,11 @@ class LabeledDialControl(QFrame):
         if not self.showvalue:
             return 
         
-        if len(self.lbl) > 0:
-            if int(self.scaleFactor) != 1:
-                newValue = newValue * self.scaleFactor
-                
-            textstr = self.buildTextStr(newValue)
-            self.lblcontrol.setText(textstr)
+        if int(self.scaleFactor) != 1:
+            newValue = newValue * self.scaleFactor
+            
+        textstr = self.buildTextStr(newValue)
+        self.lblcontrol.setText(textstr)
         
 class DialControl(Qt.QDial):
     def __init__(self, minimum=0, maximum=100, defaultvalue=0,backgroundColor='default', lablelCallback=None, changedCallback=None, minsize=100):
