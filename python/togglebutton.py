@@ -43,7 +43,7 @@ class ToggleButton(gr.sync_block, Qt.QPushButton):
         if initPressed:
             self.setChecked(True)
             self.state = 1
-            self.callback(self.pressReleasedDict['Pressed'])
+            # self.callback(self.pressReleasedDict['Pressed'])
             # Note: You can't send the pmt message here in the constructor, it won't work.
         else:
             self.state = 0

@@ -54,7 +54,7 @@ templates:
             win = 'self._%s_win'%id
         %>\
         ${win} = guiextra.GrLEDIndicator(${label}, "${onColor}", "${offColor}", ${state}, ${maxSize}, ${position}, self)
-        self._${id}_win = ${win}
+        self.${id} = ${win}
         ${gui_hint() % win}
     callbacks:
     - setState(${state})

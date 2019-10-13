@@ -30,11 +30,11 @@ parameters:
 -   id: pressed
     label: Pressed
     dtype: ${ type }
-    default: '1'
+    default: ${ 'True' if type == bool else '1'}
 -   id: released
     label: Released
     dtype: ${ type }
-    default: '0'
+    default: ${ 'False' if type == bool else '1'}
 -   id: gui_hint
     label: GUI Hint
     dtype: gui_hint
@@ -81,7 +81,13 @@ templates:
         <%
             win = '_%s_toggle_button'%id
         %>\
-        self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
+        if ${type} == bool:
+        	self._${id}_choices = {'Pressed': bool(${pressed}), 'Released': bool(${released})}
+        elif ${type} == str:
+        	self._${id}_choices = {'Pressed': "${pressed}", 'Released': "${released}"}
+        else:
+        	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
+        	
         ${win} = guiextra.ToggleButton(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed})
         ${win}.setColors("${relBackgroundColor}","${relFontColor}","${pressBackgroundColor}","${pressFontColor}")
         self.${id} = ${win}

@@ -125,12 +125,16 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    backgroundColor: white
     comment: ''
     fullNeedle: '1'
     gui_hint: ''
     min_size: '250'
-    name: ''
+    name: Azimuth
+    needleBodyColor: black
+    needleTipColor: red
     position: '1'
+    scaleColor: black
     setDebug: 'False'
     update_time: '0.10'
     usemsg: 'True'

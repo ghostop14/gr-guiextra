@@ -90,7 +90,6 @@ inputs:
 
 templates:
     imports: import guiextra
-    var_make: self.${id} = ${id} = ${value}
     make: |-
         <%
             win = '_%s_lg_win'%id

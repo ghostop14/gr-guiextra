@@ -33,6 +33,34 @@ parameters:
     default: 'False'
     options: ['False', 'True']
     option_labels: ['Stream', 'Message']
+-   id: backgroundColor
+    label: Backround Color
+    dtype: enum
+    default: 'default'
+    options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    hide: 'part'
+-   id: needleTipColor
+    label: Needle Tip Color
+    dtype: enum
+    default: 'red'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    hide: 'part'
+-   id: needleBodyColor
+    label: Needle Body Color
+    dtype: enum
+    default: 'black'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    hide: 'part'
+-   id: scaleColor
+    label: Scale Color
+    dtype: enum
+    default: 'black'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    hide: 'part'
 -   id: setDebug
     label: Print Updates
     dtype: enum
@@ -59,7 +87,8 @@ templates:
         <%
             win = 'self._%s_win'%id
         %>\
-        ${win} = guiextra.GrCompass(${name}, ${min_size}, ${update_time}, ${setDebug}, ${fullNeedle},${usemsg},${position})
+        ${win} = guiextra.GrCompass(${name}, ${min_size}, ${update_time}, ${setDebug}, ${fullNeedle},${usemsg},${position},"${backgroundColor}")
+        ${win}.setColors("${backgroundColor}","${needleTipColor}", "${needleBodyColor}", "${scaleColor}")
         self._${id} = ${win}
         ${gui_hint() % win}
 

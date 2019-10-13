@@ -33,9 +33,9 @@ import time
 # First Qt and 2nd Qt are different.  You'll get errors if they're both not available, hence the import-as to avoid name collisions
 from PyQt5 import Qt, QtGui
 from PyQt5.QtCore import Qt as Qtc
-from PyQt5.QtCore import pyqtSignal,  QPoint,  pyqtSlot,  pyqtProperty
+from PyQt5.QtCore import pyqtSignal,  QPoint,  pyqtSlot,  pyqtProperty, QRect
 from PyQt5.QtWidgets import QFrame, QWidget, QVBoxLayout, QVBoxLayout, QLabel
-from PyQt5.QtGui import QPainter, QPalette, QFont, QFontMetricsF,  QPen,  QPolygon
+from PyQt5.QtGui import QPainter, QPalette, QFont, QFontMetricsF,  QPen,  QPolygon, QColor, QBrush
 
 NeedleFull = 1
 NeedleIndicator = 0
@@ -43,9 +43,9 @@ NeedleMirrored = 2
 
 class LabeledCompass(QFrame):
     # Positions: 1 = above, 2=below, 3=left, 4=right
-    def __init__(self, lbl,  min_size,  update_time, setDebug = False,  needleType=NeedleFull, position=1):
+    def __init__(self, lbl,  min_size,  update_time, setDebug = False,  needleType=NeedleFull, position=1, backgroundColor='default'):
         QFrame.__init__(self)
-        self.numberControl = Compass( min_size, update_time, setDebug,  needleType, position)
+        self.numberControl = Compass( min_size, update_time, setDebug,  needleType, position, backgroundColor)
         
         if position < 3:
             layout =  QVBoxLayout()
@@ -82,10 +82,13 @@ class LabeledCompass(QFrame):
     def change_angle(self, angle):
         self.numberControl.change_angle(angle)
         
+    def setColors(self,backgroundColor='default', needleTip='red', needleBody='black', scaleColor='black'):
+        self.numberControl.setColors(backgroundColor, needleTip, needleBody, scaleColor)
+        
 class Compass(QWidget):
     angleChanged = pyqtSignal(float)
 
-    def __init__(self, min_size, update_time, setDebug = False, needleType=NeedleFull, position=1):
+    def __init__(self, min_size, update_time, setDebug = False, needleType=NeedleFull, position=1, backgroundColor='default'):
         QWidget.__init__(self, None)
         
         # Set parameters
@@ -105,13 +108,40 @@ class Compass(QWidget):
 
         self.setMinimumSize(min_size,min_size)
         self.setSizePolicy(Qt.QSizePolicy.Expanding, Qt.QSizePolicy.Expanding)
+        
+        self.backgroundColor=backgroundColor
+        self.needleTipColor='red'
+        self.needleBodyColor='black'
+        self.scaleColor='black'
 
+    def setColors(self,backgroundColor='default', needleTipColor='red', needleBodyColor='black', scaleColor='black'):
+        self.backgroundColor=backgroundColor
+        self.needleTipColor=needleTipColor
+        self.needleBodyColor=needleBodyColor
+        self.scaleColor=scaleColor
+        
+        super().update()
+        
     def paintEvent(self, event):
         painter = QPainter()
         painter.begin(self)
         painter.setRenderHint(QPainter.Antialiasing)
         
-        painter.fillRect(event.rect(), self.palette().brush(QPalette.Window))
+        if (self.backgroundColor == 'default'):
+            painter.fillRect(event.rect(), self.palette().brush(QPalette.Window))
+        else:
+            size = self.size()
+            center_x = size.width()/2
+            diameter = size.height()
+            rect = QRect(center_x-diameter/2, 0, diameter,diameter)
+            brush = QBrush(QColor(self.backgroundColor),Qtc.SolidPattern)
+            # print("Painting background with color " + self.backgroundColor + " dimensions " + str(size))
+            painter.setBrush(brush)
+            # painter.fillRect(rect, brush)
+            painter.setPen(QPen(QColor(self.scaleColor),2))
+            painter.setRenderHint(QPainter.Antialiasing)
+            painter.drawEllipse(center_x-diameter/2+1, 1, diameter-4,diameter-4)
+
         self.drawMarkings(painter)
         self.drawNeedle(painter)
         
@@ -125,20 +155,20 @@ class Compass(QWidget):
         painter.scale(scale, scale)
         
         font = QFont(self.font())
-        font.setPixelSize(10)
+        #font.setPixelSize(10)
+        font.setPixelSize(8)
         metrics = QFontMetricsF(font)
         
         painter.setFont(font)
-        # painter.setPen(self.palette().color(QPalette.Shadow))
-        painter.setPen(QPen(Qtc.black))
+        # painter.setPen(QPen(Qtc.black))
+        painter.setPen(QPen(QColor(self.scaleColor)))
         tickInterval = 5
         i = 0
         while i < 360:
         
             if i % 45 == 0:
                 painter.drawLine(0, -40, 0, -50)
-                painter.drawText(-metrics.width(self._pointText[i])/2.0, -52,
-                                 self._pointText[i])
+                painter.drawText(-metrics.width(self._pointText[i])/2.0, -52, self._pointText[i])
             else:
                 painter.drawLine(0, -45, 0, -50)
             
@@ -163,33 +193,23 @@ class Compass(QWidget):
         # Draw the full black needle first if needed
         if (self.needleType == NeedleFull):
             needleTailBrush = self.palette().brush(QPalette.Shadow)
-            needleTailColor = Qtc.black
+            # needleTailColor = Qtc.black
+            needleTailColor = QColor(self.needleBodyColor)
             needleTailBrush.setColor(needleTailColor)
             painter.setBrush(needleTailBrush)
             
-            painter.drawPolygon(
-                QPolygon([QPoint(-6, 0), QPoint(0, -45), QPoint(6, 0),
-                          QPoint(0, 45), QPoint(-6, 0)])
-                )
-            #painter.drawPolygon(
-            #    QPolygon([QPoint(-10, 0), QPoint(0, -45), QPoint(10, 0),
-            #              QPoint(0, 45), QPoint(-10, 0)])
-            #    )
+            painter.drawPolygon(QPolygon([QPoint(-6, 0), QPoint(0, -45), QPoint(6, 0), QPoint(0, 45), QPoint(-6, 0)]))
         
         # Now draw the red tip (on top of the black needle)
         needleTipBrush = self.palette().brush(QPalette.Highlight)
-        needleTipColor = Qtc.red
+        # needleTipColor = Qtc.red
+        needleTipColor = QColor(self.needleTipColor)
         needleTipBrush.setColor(needleTipColor)
         painter.setBrush(needleTipBrush)
         
-        painter.drawPolygon(
-            QPolygon([QPoint(-3, -25), QPoint(0, -45), QPoint(3, -25),
-                      QPoint(0, -30), QPoint(-3, -25)])
-            )
-        # painter.drawPolygon(
-        #    QPolygon([QPoint(-5, -25), QPoint(0, -45), QPoint(5, -25),
-        #              QPoint(0, -30), QPoint(-5, -25)])
-        #    )
+        #painter.drawPolygon(QPolygon([QPoint(-3, -25), QPoint(0, -45), QPoint(3, -25),QPoint(0, -30), QPoint(-3, -25)]))
+        # First QPoint is the center bottom apex of the needle
+        painter.drawPolygon(QPolygon([QPoint(-3, -24), QPoint(0, -45), QPoint(3, -23),QPoint(0, -30), QPoint(-3, -23)]))
         
         if (self.needleType == NeedleMirrored):
             # Rotate
@@ -235,13 +255,13 @@ class Compass(QWidget):
     
     
 class GrCompass(gr.sync_block, LabeledCompass):
-    def __init__(self, title,  min_size,  update_time,  setDebug = False,  needleType=NeedleFull,usemsg=False, position=1):
+    def __init__(self, title,  min_size,  update_time,  setDebug = False,  needleType=NeedleFull,usemsg=False, position=1, backgroundColor='default'):
         if usemsg:
             gr.sync_block.__init__(self,name="QTCompass",in_sig=[],out_sig=[])
         else:
             gr.sync_block.__init__(self,name="QTCompass",in_sig=[numpy.float32],out_sig=[])
             
-        LabeledCompass.__init__(self, title, min_size, update_time, setDebug, needleType, position)
+        LabeledCompass.__init__(self, title, min_size, update_time, setDebug, needleType, position,backgroundColor)
         
         self.message_port_register_in(pmt.intern("angle"))
         self.set_msg_handler(pmt.intern("angle"), self.msgHandler)   
@@ -257,6 +277,9 @@ class GrCompass(gr.sync_block, LabeledCompass):
                 
         except Exception as e:
             print("[Compass] Error with message conversion: %s" % str(e))
+        
+    def setColors(self,backgroundColor='default', needleTip='red', needleBody='black', scaleColor='black'):
+        super().setColors(backgroundColor, needleTip, needleBody, scaleColor)
         
     def work(self, input_items, output_items):
         # Average inputs

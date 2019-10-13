@@ -39,6 +39,9 @@ class LabeledLevelGauge(QFrame):
         QFrame.__init__(self, parent)
         self.numberControl = LevelGauge(barColor, backgroundColor, minValue, maxValue, maxSize, isVertical, isFloat,scaleFactor,showValue,parent)
         
+        #if (isVertical):
+        #    self.numberControl.setAlignment(Qtc.AlignCenter)
+        
         if position < 3:
             layout =  QVBoxLayout()
         else:
@@ -47,12 +50,14 @@ class LabeledLevelGauge(QFrame):
         self.lbl = lbl
         self.showvalue = showValue
         self.isFloat = isFloat
+        self.isVertical = isVertical
         self.scaleFactor = scaleFactor
         
         self.lblcontrol = QLabel(lbl, self)
         self.lblcontrol.setAlignment(Qtc.AlignCenter)
 
-        if self.showvalue and isFloat:        
+        # For whatever reason, the progressbar doesn't show the number in the bar if it's vertical, only if it's horizontal
+        if self.showvalue and (isFloat or self.isVertical):        
             textstr = self.buildTextStr(minValue/self.scaleFactor)
             self.lblcontrol.setText(textstr)
             
@@ -96,12 +101,13 @@ class LabeledLevelGauge(QFrame):
         return textstr
     
     def valChanged(self, newValue):
-        if (not self.showvalue) or (not self.isFloat):
+        if (not self.showvalue):
             return 
         
-        if len(self.lbl) > 0:
-            textstr = self.buildTextStr(newValue)
-            self.lblcontrol.setText(textstr)
+        if self.isFloat or self.isVertical:
+            if len(self.lbl) > 0:
+                textstr = self.buildTextStr(newValue)
+                self.lblcontrol.setText(textstr)
             
     def setValue(self,newValue):
         self.valChanged(newValue)
@@ -143,9 +149,12 @@ class LevelGauge(QProgressBar):
             super().setPalette(p)
           
         if (not isFloat) and showValue:
+            # print("Showing value")
             super().setFormat("%v")  # This shows the number in the bar itself.
+            super().setTextVisible(True)
         else:
-            super().setFormat("")  # This shows the number in the bar itself.
+            super().setTextVisible(False)
+            # super().setFormat("")  # This shows the number in the bar itself.
         
         super().setMinimum(minValue)
         super().setMaximum(maxValue)
@@ -155,13 +164,6 @@ class LevelGauge(QProgressBar):
         else:
             super().setOrientation(Qtc.Horizontal)
             
-        #if isVertical:
-        #    self.setMinimumSize(maxSize, maxSize)      
-        #    self.setMaximumSize(maxSize, maxSize)  
-        #else:
-        #    self.setMinimumSize(maxSize, maxSize)      
-        #    self.setMaximumSize(maxSize, maxSize)  
-
     def onUpdateInt(self,newValue): 
         self.lock.acquire()
         super().setValue(newValue)
