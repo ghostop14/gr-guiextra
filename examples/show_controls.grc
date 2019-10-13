@@ -246,10 +246,10 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    backgroundColor: default
+    backgroundColor: white
     comment: ''
     fullNeedle: '1'
-    gui_hint: 1,1,1,2
+    gui_hint: 1,1,2,2
     min_size: '150'
     name: Azimuth
     needleBodyColor: black

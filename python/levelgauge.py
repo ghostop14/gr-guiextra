@@ -165,11 +165,21 @@ class LevelGauge(QProgressBar):
             super().setOrientation(Qtc.Horizontal)
             
     def onUpdateInt(self,newValue): 
+        if newValue > super().maximum():
+            newValue = super().maximum()
+        elif newValue < super().minimum():
+            newValue = super().minimum()
+            
         self.lock.acquire()
         super().setValue(newValue)
         self.lock.release()
                                  
     def onUpdateFloat(self,newValue): 
+        if newValue > super().maximum():
+            newValue = super().maximum()
+        elif newValue < super().minimum():
+            newValue = super().minimum()
+            
         self.lock.acquire()
         super().setValue(newValue)
         self.lock.release()
