@@ -30,5 +30,6 @@ install(FILES
     guiextra_graphicitem.block.yml
     guiextra_appbackground.block.yml
     guiextra_levelgauge.block.yml
+    guiextra_dialgauge.block.yml
     DESTINATION share/gnuradio/grc/blocks
 )

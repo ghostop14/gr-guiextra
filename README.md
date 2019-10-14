@@ -15,6 +15,8 @@ This OOT module set provides modernized and new GUI control capabilities for GNU
 
 **Linear Gauge (Progress Bar)** - Linear progress bar / linear gauge, either horizontal or vertical.  Colors can be chosen for the background and the bar, and it is controllable via variable or message.
 
+**Dial Gauge** - Circular guage.  Colors can be chosen for the background and the bar, and it is controllable via variable or message.
+
 **Toggle Button** - Push to hold down.  Push again to release.  Both variables and messages available.
 
 **Message-based Checkbox** - Like a standard checkbox, but a message is produced on check / uncheck.
