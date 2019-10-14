@@ -42,6 +42,8 @@ class LabeledLEDIndicator(QFrame):
         else:
             layout = QHBoxLayout()
             
+        if len(lbl) == 0:
+            lbl = " "
         self.lbl = lbl
         self.lblcontrol = QLabel(lbl, self)
         self.lblcontrol.setAlignment(Qtc.AlignCenter)
