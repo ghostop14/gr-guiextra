@@ -81,7 +81,7 @@ templates:
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
-        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position})
+        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${label}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position})
         self.${id} = ${win}
 
         ${gui_hint() % win}
