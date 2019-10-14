@@ -44,3 +44,4 @@ from .ledindicator import GrLEDIndicator
 from .graphicitem import GrGraphicItem
 from .levelgauge import GrLevelGauge
 from .dialgauge import GrDialGauge
+from .toggleswitch import GrToggleSwitch

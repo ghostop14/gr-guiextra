@@ -43,6 +43,7 @@ GR_PYTHON_INSTALL(
     graphicitem.py
     levelgauge.py
     dialgauge.py
+    toggleswitch.py
     DESTINATION ${GR_PYTHON_DIR}/guiextra
 )
 

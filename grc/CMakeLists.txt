@@ -21,6 +21,7 @@
 install(FILES
     guiextra_compass.block.yml
     guiextra_togglebutton.block.yml
+    guiextra_toggleswitch.block.yml
     guiextra_msgpushbutton.block.yml
     guiextra_distanceradar.block.yml
     guiextra_msgcheckbox.block.yml

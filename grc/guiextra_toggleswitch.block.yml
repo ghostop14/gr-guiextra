@@ -1,5 +1,5 @@
-id: variable_qtgui_toggle_button_msg
-label: QT GUI Toggle Button
+id: variable_qtgui_toggle_switch
+label: QT GUI Toggle Switch
 category: '[GUI Extra]'
 flags: [ show_id, python ]
 
@@ -8,6 +8,13 @@ parameters:
     label: Label
     dtype: string
     hide: ${ ('none' if label else 'part') }
+-   id: position
+    label: Label Position
+    dtype: enum
+    default: '4'
+    options: ['3', '4']
+    option_labels: ['Left', 'Right']
+    hide: 'part'
 -   id: type
     label: Type
     dtype: enum
@@ -28,40 +35,26 @@ parameters:
     options: ['False', 'True']
     option_labels: ['Released', 'Pressed']
 -   id: pressed
-    label: Pressed
+    label: On Value
     dtype: ${ type }
     default: '1'
 -   id: released
-    label: Released
+    label: Off Value
     dtype: ${ type }
     default: '0'
--   id: relBackgroundColor
-    label: Released Background
+-   id: switchOnBackground
+    label: Switch On Background
     dtype: enum
-    default: 'default'
-    options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    default: 'green'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
--   id: relFontColor
-    label: Released Font Color
+-   id: switchOffBackground
+    label: switchOffBackground
     dtype: enum
-    default: 'default'
-    options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    hide: 'part'
--   id: pressBackgroundColor
-    label: Pressed Background
-    dtype: enum
-    default: 'default'
-    options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    hide: 'part'
--   id: pressFontColor
-    label: Pressed Font Color
-    dtype: enum
-    default: 'default'
-    options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    default: 'gray'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
 -   id: gui_hint
     label: GUI Hint
@@ -88,8 +81,7 @@ templates:
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
-        ${win} = guiextra.ToggleButton(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed})
-        ${win}.setColors("${relBackgroundColor}","${relFontColor}","${pressBackgroundColor}","${pressFontColor}")
+        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position})
         self.${id} = ${win}
 
         ${gui_hint() % win}

@@ -10,7 +10,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: test_toggle
+    id: test_toggleswitch2
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -21,7 +21,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Test Toggle Button
+    title: Test Toggle Switch
     window_size: ''
   states:
     bus_sink: false
@@ -32,6 +32,27 @@ options:
     state: enabled
 
 blocks:
+- name: ledstate_id_0
+  id: variable_qtgui_toggle_switch
+  parameters:
+    comment: ''
+    gui_hint: 0,0,1,1
+    initPressed: 'False'
+    label: Toggle
+    position: '4'
+    pressed: '1'
+    released: '0'
+    switchOffBackground: gray
+    switchOnBackground: green
+    type: int
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 60.0]
+    rotation: 0
+    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -42,41 +63,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [184, 12]
-    rotation: 0
-    state: enabled
-- name: state
-  id: variable_qtgui_toggle_button_msg
-  parameters:
-    comment: ''
-    gui_hint: 0,0,1,1
-    initPressed: 'False'
-    label: State
-    pressBackgroundColor: default
-    pressFontColor: default
-    pressed: '1'
-    relBackgroundColor: default
-    relFontColor: default
-    released: '0'
-    type: int
-    value: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [392, 28.0]
-    rotation: 0
-    state: true
-- name: blocks_message_debug_0
-  id: blocks_message_debug
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [704, 80.0]
     rotation: 0
     state: enabled
 - name: blocks_null_sink_0
@@ -93,7 +79,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [736, 216.0]
+    coordinate: [680, 304.0]
     rotation: 0
     state: true
 - name: blocks_null_source_0
@@ -112,7 +98,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 208.0]
+    coordinate: [304, 304.0]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -131,7 +117,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 212.0]
+    coordinate: [504, 300.0]
     rotation: 0
     state: true
 - name: guiextra_ledindicator_0
@@ -140,25 +126,25 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    gui_hint: 0,1,1,1
+    gui_hint: 1,0,1,1
     label: '"State"'
     maxSize: '40'
     offColor: red
     onColor: green
     position: '1'
-    state: state
+    state: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [912, 44.0]
+    coordinate: [624, 52.0]
     rotation: 0
     state: true
 
 connections:
 - [blocks_null_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', blocks_null_sink_0, '0']
-- [state, state, blocks_message_debug_0, print]
+- [ledstate_id_0, state, guiextra_ledindicator_0, state]
 
 metadata:
   file_format: 1
