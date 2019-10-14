@@ -30,15 +30,11 @@ parameters:
 -   id: pressed
     label: Pressed
     dtype: ${ type }
-    default: ${ 'True' if type == bool else '1'}
+    default: '1'
 -   id: released
     label: Released
     dtype: ${ type }
-    default: ${ 'False' if type == bool else '1'}
--   id: gui_hint
-    label: GUI Hint
-    dtype: gui_hint
-    hide: part
+    default: '0'
 -   id: relBackgroundColor
     label: Released Background
     dtype: enum
@@ -67,6 +63,10 @@ parameters:
     options: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     option_labels: ['default', 'silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
 value: ${ value }
 
 outputs:
