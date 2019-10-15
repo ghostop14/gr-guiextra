@@ -58,7 +58,7 @@ class GrGraphicItem(gr.sync_block, QLabel):
     def msgHandler(self, msg):
         try:    
             newVal = pmt.to_python(pmt.cdr(msg))
-
+            imageFile=newVal
             if type(newVal) == str:
                 if not os.path.isfile(imageFile):
                     print("[GrGraphicsItem] ERROR: Unable to find file " + imageFile)
@@ -71,7 +71,7 @@ class GrGraphicItem(gr.sync_block, QLabel):
                     return
                 
                 super().setPixmap(self.pixmap)
-                update()
+                # update()
             else:
                 print("[GrGraphicsItem] Error: Value received was not an int or a bool: %s" % str(e))
                 

@@ -12,10 +12,10 @@ parameters:
     label: Type
     dtype: enum
     default: int
-    options: [int, bool, str]
-    option_labels: [Integer, Boolean, String]
+    options: [real, int, string, bool]
+    option_labels: [Float, Integer, String, Boolean]
     option_attributes:
-        conv: [int, bool, str]
+        conv: [float, int, str, bool]
     hide: part
 -   id: value
     label: Default Value
@@ -73,7 +73,7 @@ templates:
             win = '_%s_toggle_button'%id
         %>\
         self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
-        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment},"${outputmsgname}")
+        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment},"${outputmsgname}".replace("'",""))
         self.${id} = ${win}
 
         ${gui_hint() % win}
