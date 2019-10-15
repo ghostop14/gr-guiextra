@@ -30,6 +30,8 @@ from PyQt5.QtCore import QSize, QPoint, QRect
 from PyQt5.QtGui import QPalette
 from threading import Lock
 
+import sys
+
 from gnuradio import gr
 import pmt
 
@@ -193,6 +195,10 @@ class GrDialGauge(gr.sync_block, LabeledDialGauge):
         LabeledDialGauge.__init__(self, lbl, barColor, backgroundColor, fontColor, minValue, maxValue, maxSize, position, isFloat,showValue,fixedOrMin, parent)
         self.lbl = lbl
         
+        if (minValue > maxValue):
+            print("[LevelGauge] ERROR: min value is greater than max value.")
+            sys.exit(1)
+            
         self.message_port_register_in(pmt.intern("value"))
         self.set_msg_handler(pmt.intern("value"), self.msgHandler)   
 

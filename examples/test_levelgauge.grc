@@ -80,6 +80,7 @@ blocks:
     maximum: '100'
     minimum: '0'
     minsize: '100'
+    outputmsgname: value
     relBackgroundColor: green
     scaleFactor: '1'
     showvalue: 'True'
