@@ -32,27 +32,6 @@ options:
     state: enabled
 
 blocks:
-- name: Throughput
-  id: variable_qtgui_dial_control
-  parameters:
-    comment: ''
-    gui_hint: 0,0,1,1
-    label: throughput
-    maximum: '3600.0'
-    minimum: '0.0'
-    minsize: '100'
-    relBackgroundColor: default
-    scaleFactor: 1/10
-    showvalue: 'False'
-    type: real
-    value: '0.0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [368, 4.0]
-    rotation: 0
-    state: true
 - name: guiextra_dialgauge_0
   id: guiextra_dialgauge
   parameters:
@@ -90,6 +69,50 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
+- name: setval
+  id: variable_qtgui_dial_control
+  parameters:
+    comment: ''
+    gui_hint: 0,0,1,1
+    label: Dial
+    maximum: '3600.0'
+    minimum: '0.0'
+    minsize: '100'
+    relBackgroundColor: default
+    scaleFactor: 1/10
+    showvalue: 'False'
+    type: real
+    value: '1200.0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 4.0]
+    rotation: 0
+    state: true
+- name: toggleswitch
+  id: variable_qtgui_toggle_switch
+  parameters:
+    cellalignment: '1'
+    comment: ''
+    gui_hint: 1,0,1,1
+    initPressed: 'False'
+    label: Toggle Switch
+    position: '4'
+    pressed: '1'
+    released: '0'
+    switchOffBackground: blue
+    switchOnBackground: green
+    type: int
+    value: '0'
+    verticalalignment: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [576, 184.0]
+    rotation: 0
+    state: true
 - name: blocks_null_sink_0
   id: blocks_null_sink
   parameters:
@@ -147,9 +170,9 @@ blocks:
     state: true
 
 connections:
-- [Throughput, value, guiextra_dialgauge_0, value]
 - [blocks_null_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', blocks_null_sink_0, '0']
+- [setval, value, guiextra_dialgauge_0, value]
 
 metadata:
   file_format: 1
