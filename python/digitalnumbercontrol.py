@@ -149,7 +149,11 @@ class DigitalNumberControl(QFrame):
         fm = QFontMetrics(self.numberFont)
         
         if len(self.ThousandsSeparator) > 0:
-            textstr = format(self.getFrequency(), self.ThousandsSeparator)
+            if self.ThousandsSeparator != ".":
+                textstr = format(self.getFrequency(), self.ThousandsSeparator)
+            else:
+                textstr = format(self.getFrequency(), ",")
+                textstr = textstr.replace(",",".")
         else:
             textstr = str(self.getFrequency())
 
@@ -297,7 +301,11 @@ class DigitalNumberControl(QFrame):
         rect = event.rect()
         
         if len(self.ThousandsSeparator) > 0:
-            textstr = format(self.getFrequency(), self.ThousandsSeparator)
+            if self.ThousandsSeparator != ".":
+                textstr = format(self.getFrequency(), self.ThousandsSeparator)
+            else:
+                textstr = format(self.getFrequency(), ",")
+                textstr = textstr.replace(",",".")
         else:
             textstr = str(self.getFrequency())
         rect = QtCore.QRect(0, 0, size.width()-4, size.height())
