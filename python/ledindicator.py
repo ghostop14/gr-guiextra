@@ -21,7 +21,7 @@
 # Boston, MA 02110-1301, USA.
 #
 from PyQt5.QtWidgets import QFrame, QWidget, QHBoxLayout, QVBoxLayout, QLabel
-from PyQt5.QtGui import QPainter, QPixmap,  QBrush, QColor, QPen
+from PyQt5.QtGui import QPainter, QPixmap,  QBrush, QColor, QPen, QFontMetricsF
 from PyQt5 import Qt
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt as Qtc
@@ -33,7 +33,7 @@ import pmt
 
 class LabeledLEDIndicator(QFrame):
     # Positions: 1 = above, 2=below, 3=left, 4=right
-    def __init__(self, lbl='', onColor='green', offColor='red', initialState=False, maxSize=80, position=1, parent=None):
+    def __init__(self, lbl='', onColor='green', offColor='red', initialState=False, maxSize=80, position=1, alignment=1, valignment=1, parent=None):
         QFrame.__init__(self, parent)
         self.numberControl = LEDIndicator(onColor, offColor, initialState, maxSize, parent)
         
@@ -62,13 +62,32 @@ class LabeledLEDIndicator(QFrame):
             if position == 2 or position == 4:
                 layout.addWidget(self.lblcontrol)
                 
-        layout.setAlignment(Qtc.AlignCenter | Qtc.AlignVCenter)
+        if alignment == 1:        
+            halign = Qtc.AlignCenter
+        elif alignment == 2:
+            halign = Qtc.AlignLeft
+        else:
+            halign = Qtc.AlignRight
+
+        if valignment == 1:
+            valign = Qtc.AlignVCenter
+        elif valignment == 2:
+            valign = Qtc.AlignTop
+        else:
+            valign = Qtc.AlignBottom
+            
+        layout.setAlignment(halign | valign)
         self.setLayout(layout)
         
         if (len(lbl) > 0):
-            self.setMaximumSize(maxSize+30, maxSize+35)
+            textfont = self.lblcontrol.font()
+            metrics = QFontMetricsF(textfont)
+            
+            maxWidth = max( (maxSize+30),(maxSize + metrics.width(lbl)+4) )
+            maxHeight = max( (maxSize+35),(maxSize + metrics.height()+2) )
+            self.setMinimumSize(maxWidth, maxHeight)
         else:
-            self.setMaximumSize(maxSize, maxSize)  
+            self.setMinimumSize(maxSize+2, maxSize+2)  
 
         self.show()
         
@@ -167,9 +186,9 @@ class LEDIndicator(QFrame):
         painter.drawEllipse(centerpoint,radius,radius)
 
 class GrLEDIndicator(gr.sync_block, LabeledLEDIndicator):
-    def __init__(self, lbl='', onColor='green', offColor='red', initialState=False, maxSize=80, position=1, parent=None):
+    def __init__(self, lbl='', onColor='green', offColor='red', initialState=False, maxSize=80, position=1, alignment=1, valignment=1, parent=None):
         gr.sync_block.__init__(self, name = "LEDIndicator", in_sig = None, out_sig = None)
-        LabeledLEDIndicator.__init__(self, lbl, onColor, offColor, initialState, maxSize, position, parent)
+        LabeledLEDIndicator.__init__(self, lbl, onColor, offColor, initialState, maxSize, position, alignment, valignment, parent)
         self.lbl = lbl
         
         self.message_port_register_in(pmt.intern("state"))

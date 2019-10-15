@@ -35,17 +35,19 @@ blocks:
 - name: ledstate
   id: variable_qtgui_toggle_switch
   parameters:
+    cellalignment: '1'
     comment: ''
     gui_hint: 0,0,1,1
     initPressed: 'False'
-    label: Toggle
-    position: '4'
+    label: State
+    position: '3'
     pressed: '1'
     released: '0'
     switchOffBackground: gray
     switchOnBackground: green
     type: int
     value: '0'
+    verticalalignment: '1'
   states:
     bus_sink: false
     bus_source: false
@@ -125,6 +127,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    cellalignment: '1'
     comment: ''
     gui_hint: 1,0,1,1
     label: '"State"'
@@ -133,6 +136,7 @@ blocks:
     onColor: green
     position: '1'
     state: ledstate
+    verticalalignment: '1'
   states:
     bus_sink: false
     bus_source: false

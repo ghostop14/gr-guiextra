@@ -19,10 +19,10 @@ parameters:
     label: Type
     dtype: enum
     default: int
-    options: [int, bool]
-    option_labels: [Integer, Boolean]
+    options: [int, bool, str]
+    option_labels: [Integer, Boolean, String]
     option_attributes:
-        conv: [int, bool]
+        conv: [int, bool, str]
     hide: part
 -   id: value
     label: Default Value
@@ -56,6 +56,20 @@ parameters:
     options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
+-   id: cellalignment
+    label: Cell Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Left','Right']
+    hide: part
+-   id: verticalalignment
+    label: Vertical Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Top','Bottom']
+    hide: part
 -   id: gui_hint
     label: GUI Hint
     dtype: gui_hint
@@ -81,17 +95,15 @@ templates:
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
-        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${label}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position})
+        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${label}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position}, 50, ${cellalignment}, ${verticalalignment},self)
         self.${id} = ${win}
 
         ${gui_hint() % win}
 
 documentation: |-
-    This block creates a variable toggle button. Leave the label blank to use the variable id as the label.
+    This block creates a modern toggle switch. The variable will take on one value or the other as set in the dialog.
 
-    A toggle button selects between two values of similar type, but will stay depressed until clicked again. The variable will take on one value or the other depending on whether the button is pressed or released.
-
-    This button will also produce a state message with a value of 1 when depressed and 0 when not depressed.
+    This button will also produce a state message matching the set values.
 
     The GUI hint can be used to position the widget within the application. The hint is of the form [tab_id@tab_index]: [row, col, row_span, col_span]. Both the tab specification and the grid position are optional.
 

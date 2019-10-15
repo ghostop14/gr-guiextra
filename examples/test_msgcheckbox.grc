@@ -47,8 +47,9 @@ blocks:
 - name: state
   id: variable_qtgui_msgcheckbox
   parameters:
+    cellalignment: '2'
     comment: ''
-    gui_hint: ''
+    gui_hint: 1,0,1,1
     initPressed: 'False'
     label: State
     pressed: '1'
@@ -59,7 +60,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 28.0]
+    coordinate: [416, 80.0]
     rotation: 0
     state: true
 - name: variable_qtgui_label_0
@@ -67,7 +68,7 @@ blocks:
   parameters:
     comment: ''
     formatter: None
-    gui_hint: ''
+    gui_hint: 0,0,1,1
     label: state
     type: int
     value: state

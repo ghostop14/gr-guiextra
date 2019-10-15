@@ -37,6 +37,20 @@ parameters:
     dtype: int
     default: '40'
     hide: part
+-   id: cellalignment
+    label: Cell Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Left','Right']
+    hide: part
+-   id: verticalalignment
+    label: Vertical Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Top','Bottom']
+    hide: part
 -   id: gui_hint
     label: GUI Hint
     dtype: gui_hint
@@ -53,7 +67,7 @@ templates:
         <%
             win = 'self._%s_win'%id
         %>\
-        ${win} = guiextra.GrLEDIndicator(${label}, "${onColor}", "${offColor}", ${state}, ${maxSize}, ${position}, self)
+        ${win} = guiextra.GrLEDIndicator(${label}, "${onColor}", "${offColor}", ${state}, ${maxSize}, ${position}, ${cellalignment}, ${verticalalignment}, self)
         self.${id} = ${win}
         ${gui_hint() % win}
     callbacks:

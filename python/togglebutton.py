@@ -91,11 +91,14 @@ class ToggleButton(gr.sync_block, Qt.QPushButton):
         if (pressed):
             if type(self.pressReleasedDict['Pressed']) == bool:
                 self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
-            else:
+            elif type(self.pressReleasedDict['Pressed']) == int:
                 self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Pressed']) ))
+            else:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Pressed']) ))
         else:
             if type(self.pressReleasedDict['Released']) == bool:
                 self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Released']) ))
-            else:
+            elif type(self.pressReleasedDict['Released']) == int:
                 self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Released']) ))
-        
+            else:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Released']) ))

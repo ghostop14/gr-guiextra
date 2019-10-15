@@ -12,10 +12,10 @@ parameters:
     label: Type
     dtype: enum
     default: int
-    options: [int, bool]
-    option_labels: [Integer, Boolean]
+    options: [int, bool, str]
+    option_labels: [Integer, Boolean, String]
     option_attributes:
-        conv: [int, bool]
+        conv: [int, bool, str]
     hide: part
 -   id: value
     label: Default Value
@@ -99,7 +99,7 @@ documentation: |-
 
     A toggle button selects between two values of similar type, but will stay depressed until clicked again. The variable will take on one value or the other depending on whether the button is pressed or released.
 
-    This button will also produce a state message with a value of 1 when depressed and 0 when not depressed.
+    This button will also produce a state message matching the set values.
 
     The GUI hint can be used to position the widget within the application. The hint is of the form [tab_id@tab_index]: [row, col, row_span, col_span]. Both the tab specification and the grid position are optional.
 

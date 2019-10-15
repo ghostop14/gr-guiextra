@@ -21,37 +21,78 @@
 # Boston, MA 02110-1301, USA.
 #
 from PyQt5 import Qt
+from PyQt5.QtWidgets import QFrame, QVBoxLayout
+from PyQt5.QtCore import Qt as Qtc
+
 from gnuradio import gr
 import pmt
 
-class MsgCheckBox(gr.sync_block, Qt.QCheckBox):
-    def __init__(self, callback, lbl, pressedReleasedDict, initPressed):
-        gr.sync_block.__init__(self, name = "MsgCheckBox", in_sig = None, out_sig = None)
+class CheckBoxEx(Qt.QCheckBox):
+    def __init__(self, lbl, callback=None):
         Qt.QCheckBox.__init__(self)
-        self.lbl = lbl
         self.setText(lbl)
+        self.callback = callback
+
+        self.stateChanged.connect(self.onToggleClicked)
+        
+    def onToggleClicked(self):
+        if self.callback is not None:
+            self.callback(super().isChecked())
+
+class MsgCheckBox(gr.sync_block, QFrame):
+    def __init__(self, callback, lbl, pressedReleasedDict, initPressed, alignment, valignment):
+        gr.sync_block.__init__(self, name = "MsgCheckBox", in_sig = None, out_sig = None)
+        QFrame.__init__(self)
+                        
+        self.chkBox = CheckBoxEx(lbl, self.onToggleClicked)
+        
+        layout =  QVBoxLayout()
+        
+        layout.addWidget(self.chkBox)
+
+        if alignment == 1:        
+            halign = Qtc.AlignCenter
+        elif alignment == 2:
+            halign = Qtc.AlignLeft
+        else:
+            halign = Qtc.AlignRight
+
+        if valignment == 1:
+            valign = Qtc.AlignVCenter
+        elif valignment == 2:
+            valign = Qtc.AlignTop
+        else:
+            valign = Qtc.AlignBottom
+            
+        layout.setAlignment(halign | valign)
+        self.setLayout(layout)
+        
         self.callback = callback
         self.pressReleasedDict = pressedReleasedDict
         
         self.message_port_register_out(pmt.intern("state"))
 
         if initPressed:
-            self.setChecked(True)
-            self.state = 1
-            self.callback(self.pressReleasedDict['Pressed'])
-            # Note: You can't send the pmt message here in the constructor, it won't work.
-        else:
-            self.state = 0
+            self.chkctl.setChecked(True)
         
-        self.stateChanged.connect(self.onToggleClicked)
+        self.show()
         
-    def onToggleClicked(self):
-        if self.isChecked():
-            self.state = 1
+    def onToggleClicked(self, checked):
+        if self.chkBox.isChecked():
             self.callback(self.pressReleasedDict['Pressed'])
+            
+            if type(self.pressReleasedDict['Pressed']) == bool:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
+            elif type(self.pressReleasedDict['Pressed']) == int:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Pressed']) ))
+            else:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Pressed']) ))
         else:
-            self.state = 0
             self.callback(self.pressReleasedDict['Released'])
-        
-        self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.state) ))
-        
+
+            if type(self.pressReleasedDict['Released']) == bool:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Released']) ))
+            elif type(self.pressReleasedDict['Released']) == int:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Released']) ))
+            else:
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Released']) ))

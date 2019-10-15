@@ -12,10 +12,10 @@ parameters:
     label: Type
     dtype: enum
     default: int
-    options: [real, int, string, bool, raw]
-    option_labels: [Float, Integer, String, Boolean, Any]
+    options: [int, bool, str]
+    option_labels: [Integer, Boolean, String]
     option_attributes:
-        conv: [float, int, str, bool, eval]
+        conv: [int, bool, str]
     hide: part
 -   id: value
     label: Default Value
@@ -35,6 +35,20 @@ parameters:
     label: Unchecked
     dtype: ${ type }
     default: '0'
+-   id: cellalignment
+    label: Cell Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Left','Right']
+    hide: part
+-   id: verticalalignment
+    label: Vertical Alignment
+    dtype: enum
+    default: '1'
+    options: ['1','2','3']
+    option_labels: ['Center','Top','Bottom']
+    hide: part
 -   id: gui_hint
     label: GUI Hint
     dtype: gui_hint
@@ -54,7 +68,7 @@ templates:
             win = '_%s_toggle_button'%id
         %>\
         self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
-        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed})
+        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment})
         self.${id} = ${win}
 
         ${gui_hint() % win}
@@ -64,7 +78,7 @@ documentation: |-
 
     A checkbox selects between two values of similar type, but will stay depressed until clicked again. The variable will take on one value or the other depending on whether the button is pressed or released.
 
-    This checkbox will also produce a state message with a value of 1 when checked and 0 when not checked.
+    This control will also produce a state message matching the set values.
 
     The GUI hint can be used to position the widget within the application. The hint is of the form [tab_id@tab_index]: [row, col, row_span, col_span]. Both the tab specification and the grid position are optional.
 
