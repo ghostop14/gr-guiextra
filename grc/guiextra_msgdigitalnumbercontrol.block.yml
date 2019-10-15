@@ -27,6 +27,11 @@ parameters:
     options: [',', '.', '',]
     option_labels: ['Comma', 'Period', 'None']
     hide: 'part'
+-   id: outputmsgname
+    label: Message Property Name
+    type: string
+    default: 'freq'
+    hide: part
 -   id: relBackgroundColor
     label: Background
     dtype: enum
@@ -69,7 +74,7 @@ templates:
         <%
             win = 'self._%s_msgdigctl_win'%id
         %>\
-        ${win} = guiextra.MsgDigitalNumberControl(lbl = ${lbl}, minFreqHz = ${minFreqHz}, maxFreqHz=${maxFreqHz}, parent=self,  ThousandsSeparator="${ThousandsSeparator}",backgroundColor="${relBackgroundColor}",fontColor="${relFontColor}", varCallback=self.set_${id})
+        ${win} = guiextra.MsgDigitalNumberControl(lbl = ${lbl}, minFreqHz = ${minFreqHz}, maxFreqHz=${maxFreqHz}, parent=self,  ThousandsSeparator="${ThousandsSeparator}",backgroundColor="${relBackgroundColor}",fontColor="${relFontColor}", varCallback=self.set_${id},outputmsgname="${outputmsgname}")
         ${win}.setValue(${value})
         ${win}.setReadOnly(${readOnly})
         self.${id} = ${win}

@@ -316,12 +316,14 @@ class DigitalNumberControl(QFrame):
 
 # GNU Radio Class
 class MsgDigitalNumberControl(gr.sync_block, LabeledDigitalNumberControl):
-    def __init__(self, lbl = '', minFreqHz = 0, maxFreqHz=6000000000, parent=None,  ThousandsSeparator=',', backgroundColor='black', fontColor='white',varCallback=None):
+    def __init__(self, lbl = '', minFreqHz = 0, maxFreqHz=6000000000, parent=None,  ThousandsSeparator=',', 
+                 backgroundColor='black', fontColor='white',varCallback=None,outputmsgname='freq'):
         gr.sync_block.__init__(self, name = "MsgDigitalNumberControl", in_sig = None, out_sig = None)
         LabeledDigitalNumberControl.__init__(self,lbl,minFreqHz,maxFreqHz,parent,ThousandsSeparator,backgroundColor, fontColor, self.clickCallback)
 
         self.varCallback = varCallback
-                
+        self.outputmsgname = outputmsgname
+        
         self.message_port_register_in(pmt.intern("valuein"))
         self.set_msg_handler(pmt.intern("valuein"), self.msgHandler)   
         self.message_port_register_out(pmt.intern("valueout"))
@@ -353,12 +355,12 @@ class MsgDigitalNumberControl(gr.sync_block, LabeledDigitalNumberControl):
         # print("click callback called")
         self.callVarCallback(newValue)
 
-        self.message_port_pub(pmt.intern("valueout"),pmt.cons( pmt.intern("value"), pmt.from_float(float(newValue)) ))
+        self.message_port_pub(pmt.intern("valueout"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_float(float(newValue)) ))
         
     def setValue(self,newVal):
         self.setFrequency(newVal)
         
-        self.message_port_pub(pmt.intern("valueout"),pmt.cons( pmt.intern("value"), pmt.from_float(float(self.getFrequency())) ))
+        self.message_port_pub(pmt.intern("valueout"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_float(float(self.getFrequency())) ))
         
     def getValue(self):
         self.getFrequency()
