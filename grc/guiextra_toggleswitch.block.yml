@@ -42,6 +42,11 @@ parameters:
     label: Off Value
     dtype: ${ type }
     default: '0'
+-   id: outputmsgname
+    label: Message Property Name
+    dtype: string
+    default: 'value'
+    hide: 'part'
 -   id: switchOnBackground
     label: Switch On Background
     dtype: enum
@@ -95,7 +100,7 @@ templates:
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
-        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${label}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position}, 50, ${cellalignment}, ${verticalalignment},self)
+        ${win} = guiextra.GrToggleSwitch(${ 'self.set_' + context.get('id')() }, ${label}, self._${id}_choices, ${initPressed},"${switchOnBackground}","${switchOffBackground}",${position}, 50, ${cellalignment}, ${verticalalignment},self,"${outputmsgname}")
         self.${id} = ${win}
 
         ${gui_hint() % win}

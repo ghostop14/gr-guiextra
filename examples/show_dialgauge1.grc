@@ -74,10 +74,11 @@ blocks:
   parameters:
     comment: ''
     gui_hint: 0,0,1,1
-    label: Some Message Val
+    label: Dial
     maximum: '3600.0'
     minimum: '0.0'
     minsize: '100'
+    outputmsgname: value
     relBackgroundColor: default
     scaleFactor: 1/10
     showvalue: 'False'
@@ -88,6 +89,19 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [368, 4.0]
+    rotation: 0
+    state: true
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [672, 176.0]
     rotation: 0
     state: true
 - name: blocks_null_sink_0
@@ -149,6 +163,7 @@ blocks:
 connections:
 - [blocks_null_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', blocks_null_sink_0, '0']
+- [throughput, value, blocks_message_debug_0, print]
 - [throughput, value, guiextra_dialgauge_0, value]
 
 metadata:

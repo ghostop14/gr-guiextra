@@ -25,7 +25,7 @@ from gnuradio import gr
 import pmt
 
 class ToggleButton(gr.sync_block, Qt.QPushButton):
-    def __init__(self, callback, lbl, pressedReleasedDict, initPressed):
+    def __init__(self, callback, lbl, pressedReleasedDict, initPressed,outputmsgname='value'):
         gr.sync_block.__init__(self, name = "ToggleButton", in_sig = None, out_sig = None)
         Qt.QPushButton.__init__(self,lbl)
         self.setCheckable(True)
@@ -33,6 +33,7 @@ class ToggleButton(gr.sync_block, Qt.QPushButton):
         self.callback = callback
         self.pressReleasedDict = pressedReleasedDict
         
+        self.outputmsgname = outputmsgname
         self.relBackColor = 'default'
         self.relFontColor = 'default'
         self.pressBackColor = 'default'
@@ -90,15 +91,15 @@ class ToggleButton(gr.sync_block, Qt.QPushButton):
         
         if (pressed):
             if type(self.pressReleasedDict['Pressed']) == bool:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
             elif type(self.pressReleasedDict['Pressed']) == int:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_long(self.pressReleasedDict['Pressed']) ))
             else:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.intern(self.pressReleasedDict['Pressed']) ))
         else:
             if type(self.pressReleasedDict['Released']) == bool:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_bool(self.pressReleasedDict['Released']) ))
             elif type(self.pressReleasedDict['Released']) == int:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_long(self.pressReleasedDict['Released']) ))
             else:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.intern(self.pressReleasedDict['Released']) ))

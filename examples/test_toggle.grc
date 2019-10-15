@@ -51,6 +51,7 @@ blocks:
     gui_hint: 0,0,1,1
     initPressed: 'False'
     label: State
+    outputmsgname: value
     pressBackgroundColor: default
     pressFontColor: default
     pressed: '1'
@@ -139,6 +140,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    cellalignment: '1'
     comment: ''
     gui_hint: 0,1,1,1
     label: '"State"'
@@ -147,6 +149,7 @@ blocks:
     onColor: green
     position: '1'
     state: state
+    verticalalignment: '1'
   states:
     bus_sink: false
     bus_source: false

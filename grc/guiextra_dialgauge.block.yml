@@ -22,7 +22,7 @@ parameters:
     option_labels: [Float, Integer]
     option_attributes:
         conv: [float, int]
-    hide: part
+    hide: 'part'
 -   id: value
     label: Value
     dtype: ${ type }
@@ -40,7 +40,7 @@ parameters:
     dtype: bool
     default: 'False'
 -   id: msize
-    label: Size
+    label: Control Size (px)
     dtype: int
     default: '100'
     hide: part

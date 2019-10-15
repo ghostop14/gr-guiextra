@@ -35,6 +35,11 @@ parameters:
     label: Released
     dtype: ${ type }
     default: '0'
+-   id: outputmsgname
+    label: Message Property Name
+    dtype: string
+    default: 'value'
+    hide: 'part'
 -   id: relBackgroundColor
     label: Released Background
     dtype: enum
@@ -88,7 +93,7 @@ templates:
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
-        ${win} = guiextra.ToggleButton(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed})
+        ${win} = guiextra.ToggleButton(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed},"${outputmsgname}")
         ${win}.setColors("${relBackgroundColor}","${relFontColor}","${pressBackgroundColor}","${pressFontColor}")
         self.${id} = ${win}
 

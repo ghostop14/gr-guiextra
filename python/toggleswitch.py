@@ -177,10 +177,12 @@ class ToggleSwitch(QFrame):
         super().update()
 
 class GrToggleSwitch(gr.sync_block, LabeledToggleSwitch):
-    def __init__(self, callback, lbl, pressedReleasedDict, initialState=False, onColor='green', offColor='silver', position=3 , maxSize=50, alignment=1, valignment=1, parent=None):
+    def __init__(self, callback, lbl, pressedReleasedDict, initialState=False, onColor='green', offColor='silver', 
+                 position=3 , maxSize=50, alignment=1, valignment=1, parent=None,outputmsgname='value'):
         gr.sync_block.__init__(self, name = "ToggleSwitch", in_sig = None, out_sig = None)
         LabeledToggleSwitch.__init__(self, lbl, onColor, offColor, initialState, maxSize, position, parent, self.notifyUpdate, alignment, valignment)
         
+        self.outputmsgname = outputmsgname
         self.pressReleasedDict = pressedReleasedDict
         self.callback = callback
         self.message_port_register_out(pmt.intern("state"))
@@ -194,16 +196,16 @@ class GrToggleSwitch(gr.sync_block, LabeledToggleSwitch):
             
         if (newVal):
             if type(self.pressReleasedDict['Pressed']) == bool:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_bool(self.pressReleasedDict['Pressed']) ))
             elif type(self.pressReleasedDict['Pressed']) == int:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_long(self.pressReleasedDict['Pressed']) ))
             else:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Pressed']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.intern(self.pressReleasedDict['Pressed']) ))
         else:
             if type(self.pressReleasedDict['Released']) == bool:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_bool(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_bool(self.pressReleasedDict['Released']) ))
             elif type(self.pressReleasedDict['Released']) == int:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.from_long(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_long(self.pressReleasedDict['Released']) ))
             else:
-                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern("state"), pmt.intern(self.pressReleasedDict['Released']) ))
+                self.message_port_pub(pmt.intern("state"),pmt.cons( pmt.intern(self.outputmsgname), pmt.intern(self.pressReleasedDict['Released']) ))
             

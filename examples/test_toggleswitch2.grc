@@ -35,10 +35,12 @@ blocks:
 - name: ledstate_id_0
   id: variable_qtgui_toggle_switch
   parameters:
+    cellalignment: '1'
     comment: ''
     gui_hint: 0,0,1,1
     initPressed: 'False'
     label: Toggle
+    outputmsgname: value
     position: '4'
     pressed: '1'
     released: '0'
@@ -46,6 +48,7 @@ blocks:
     switchOnBackground: green
     type: int
     value: '0'
+    verticalalignment: '1'
   states:
     bus_sink: false
     bus_source: false
@@ -65,6 +68,19 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
+- name: blocks_message_debug_0
+  id: blocks_message_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 168.0]
+    rotation: 0
+    state: true
 - name: blocks_null_sink_0
   id: blocks_null_sink
   parameters:
@@ -125,6 +141,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    cellalignment: '1'
     comment: ''
     gui_hint: 1,0,1,1
     label: '"State"'
@@ -133,6 +150,7 @@ blocks:
     onColor: green
     position: '1'
     state: '0'
+    verticalalignment: '1'
   states:
     bus_sink: false
     bus_source: false
@@ -144,6 +162,7 @@ blocks:
 connections:
 - [blocks_null_source_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', blocks_null_sink_0, '0']
+- [ledstate_id_0, state, blocks_message_debug_0, print]
 - [ledstate_id_0, state, guiextra_ledindicator_0, state]
 
 metadata:

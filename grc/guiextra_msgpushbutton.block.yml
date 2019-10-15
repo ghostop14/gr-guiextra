@@ -18,7 +18,7 @@ parameters:
         conv: [float, int, str, bool]
     hide: part
 -   id: msgName
-    label: Message Name
+    label: Message Property Name
     dtype: string
     default: 'pressed'
 -   id: value

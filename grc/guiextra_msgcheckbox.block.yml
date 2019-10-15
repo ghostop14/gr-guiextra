@@ -49,6 +49,11 @@ parameters:
     options: ['1','2','3']
     option_labels: ['Center','Top','Bottom']
     hide: part
+-   id: outputmsgname
+    label: Message Property Name
+    dtype: string
+    default: 'value'
+    hide: 'part'
 -   id: gui_hint
     label: GUI Hint
     dtype: gui_hint
@@ -68,7 +73,7 @@ templates:
             win = '_%s_toggle_button'%id
         %>\
         self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
-        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment})
+        ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment},"${outputmsgname}")
         self.${id} = ${win}
 
         ${gui_hint() % win}

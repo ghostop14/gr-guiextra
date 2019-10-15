@@ -43,6 +43,11 @@ parameters:
     dtype: int
     default: '100'
     hide: part
+-   id: outputmsgname
+    label: Message Property Name
+    dtype: string
+    default: 'value'
+    hide: 'part'
 -   id: relBackgroundColor
     label: Color
     dtype: enum
@@ -76,7 +81,7 @@ templates:
         	isFloat = True
         	scaleFactor = ${scaleFactor}
         	
-        ${win} = guiextra.GrDialControl(${label}, self, ${minimum},${maximum},${value},"${relBackgroundColor}",self.set_${id},isFloat, scaleFactor, ${minsize}, ${showvalue})
+        ${win} = guiextra.GrDialControl(${label}, self, ${minimum},${maximum},${value},"${relBackgroundColor}",self.set_${id},isFloat, scaleFactor, ${minsize}, ${showvalue}, "${outputmsgname}")
         self.${id} = ${win}
 
         ${gui_hint() % win}

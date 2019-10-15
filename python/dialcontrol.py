@@ -28,12 +28,14 @@ from gnuradio import gr
 import pmt
 
 class LabeledDialControl(QFrame):
-    def __init__(self, lbl = '', parent=None, minimum=0, maximum=100, defaultvalue=0,backgroundColor='default', changedCallback=None, minsize=100, isFloat = False, scaleFactor = 1, showvalue=False):
+    def __init__(self, lbl = '', parent=None, minimum=0, maximum=100, defaultvalue=0,backgroundColor='default', changedCallback=None, 
+                 minsize=100, isFloat = False, scaleFactor = 1, showvalue=False,outputmsgname='value'):
         QFrame.__init__(self, parent)
         self.numberControl = DialControl(minimum, maximum, defaultvalue,backgroundColor, self.valChanged, changedCallback, minsize)
         
         layout =  QVBoxLayout()
 
+        self.outputmsgname = outputmsgname
         self.showvalue = showvalue
         self.isFloat = isFloat
         self.scaleFactor = scaleFactor
@@ -105,10 +107,12 @@ class DialControl(Qt.QDial):
             self.lablelCallback(self.value())
 
 class GrDialControl(gr.sync_block, LabeledDialControl):
-    def __init__(self, lbl, parent, minimum, maximum, defaultvalue,backgroundColor='default', varCallback=None, isFloat=False, scaleFactor = 1, minsize=100, showvalue=False):
+    def __init__(self, lbl, parent, minimum, maximum, defaultvalue,backgroundColor='default', varCallback=None, isFloat=False, 
+                 scaleFactor = 1, minsize=100, showvalue=False,outputmsgname='value'):
         gr.sync_block.__init__(self, name = "GrDialControl", in_sig = None, out_sig = None)
         LabeledDialControl.__init__(self,lbl, parent, minimum, maximum, defaultvalue,backgroundColor, self.valueChanged, minsize, isFloat, scaleFactor, showvalue)
         
+        self.outputmsgname = outputmsgname
         self.varCallback = varCallback
         self.scaleFactor = scaleFactor
         self.isFloat = isFloat
@@ -122,6 +126,7 @@ class GrDialControl(gr.sync_block, LabeledDialControl):
             self.varCallback(newValue)
 
         if (self.isFloat):
-            self.message_port_pub(pmt.intern("value"),pmt.cons( pmt.intern("value"), pmt.from_float(newValue) ))
+            self.message_port_pub(pmt.intern("value"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_float(newValue) ))
         else:
-            self.message_port_pub(pmt.intern("value"),pmt.cons( pmt.intern("value"), pmt.from_long(newValue) ))
+            self.message_port_pub(pmt.intern("value"),pmt.cons( pmt.intern(self.outputmsgname), pmt.from_long(newValue) ))
+
