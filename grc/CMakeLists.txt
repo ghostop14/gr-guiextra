@@ -29,6 +29,7 @@ install(FILES
     guiextra_dialcontrol.block.yml
     guiextra_ledindicator.block.yml
     guiextra_graphicitem.block.yml
+    guiextra_graphicoverlay.block.yml
     guiextra_appbackground.block.yml
     guiextra_levelgauge.block.yml
     guiextra_dialgauge.block.yml
