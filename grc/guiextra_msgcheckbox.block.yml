@@ -72,7 +72,13 @@ templates:
         <%
             win = '_%s_toggle_button'%id
         %>\
-        self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
+        if ${type} == bool:
+        	self._${id}_choices = {'Pressed': bool(${pressed}), 'Released': bool(${released})}
+        elif ${type} == str:
+        	self._${id}_choices = {'Pressed': "${pressed}".replace("'",""), 'Released': "${released}".replace("'","")}
+        else:
+        	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
+        	
         ${win} = guiextra.MsgCheckBox(${ 'self.set_' + context.get('id')() }, ${(label if (len(label) - 2 > 0) else repr(id))}, self._${id}_choices, ${initPressed}, ${cellalignment}, ${verticalalignment},"${outputmsgname}".replace("'",""))
         self.${id} = ${win}
 

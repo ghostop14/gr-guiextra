@@ -96,7 +96,7 @@ templates:
         if ${type} == bool:
         	self._${id}_choices = {'Pressed': bool(${pressed}), 'Released': bool(${released})}
         elif ${type} == str:
-        	self._${id}_choices = {'Pressed': "${pressed}", 'Released': "${released}"}
+        	self._${id}_choices = {'Pressed': "${pressed}".replace("'",""), 'Released': "${released}".replace("'","")}
         else:
         	self._${id}_choices = {'Pressed': ${pressed}, 'Released': ${released}}
         	
