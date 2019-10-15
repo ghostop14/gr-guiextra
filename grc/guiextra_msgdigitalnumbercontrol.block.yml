@@ -29,9 +29,9 @@ parameters:
     hide: 'part'
 -   id: outputmsgname
     label: Message Property Name
-    type: string
+    dtype: string
     default: 'freq'
-    hide: part
+    hide: 'part'
 -   id: relBackgroundColor
     label: Background
     dtype: enum
