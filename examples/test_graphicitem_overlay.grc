@@ -119,7 +119,7 @@ blocks:
     alias: ''
     comment: ''
     file: /opt/sdr/gnuradio/gr-guiextra38/examples/gnuradio_logo.png
-    fixedsize: 'True'
+    fixedsize: 'False'
     gui_hint: ''
     height: '240'
     scaleImage: 'False'

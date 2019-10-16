@@ -42,6 +42,7 @@ class GrGraphicItem(gr.sync_block, QLabel):
             
         try:
             self.pixmap = QPixmap(imageFile)
+            self.originalPixmap = QPixmap(imageFile)
         except OSError as e:
             print("[GrGraphicsItem] ERROR: " + e.strerror)
             sys.exit(1)
@@ -52,7 +53,7 @@ class GrGraphicItem(gr.sync_block, QLabel):
         self.setWidth = setWidth
         self.setHeight = setHeight
         super().setPixmap(self.pixmap)
-        
+        super().setMinimumSize(1, 1)
         self.overlays = {}
         
         self.message_port_register_in(pmt.intern("filename"))
@@ -173,8 +174,8 @@ class GrGraphicItem(gr.sync_block, QLabel):
             w = super().width()
             h = super().height()
             
-            self.pixmap = self.pixmap.scaled(w,h,Qtc.KeepAspectRatio)
+            self.pixmap = self.originalPixmap.scaled(w,h,Qtc.KeepAspectRatio)
         elif self.fixedSize and self.setWidth > 0 and self.setHeight > 0:
-            self.pixmap = self.pixmap.scaled(self.setWidth,self.setHeight,Qtc.KeepAspectRatio)
+            self.pixmap = self.originalPixmap.scaled(self.setWidth,self.setHeight,Qtc.KeepAspectRatio)
 
         self.updateGraphic()
