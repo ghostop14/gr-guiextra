@@ -25,7 +25,7 @@ This OOT module set provides modernized and new GUI control capabilities for GNU
 
 **Message Pushbutton** - Produce a message when the button is pushed.  (This is different than the toggle in that this bounces back to release like a traditional button when pressed and a message is only produced on press).
 
-**Graphics Item** - Drop a graphic anywhere in your GNU Radio app screen.  You can also control the file based on input messages to change the graphic on the fly.  This can be tied to the toggle switch, button, etc. to control the image displayed based on other factors for a more dynamic display.
+**Graphics Item** - Drop a graphic anywhere in your GNU Radio app screen.  You can also control the file based on input messages to change the graphic on the fly.  This can be tied to the toggle switch, button, etc. to control the image displayed based on other factors for a more dynamic display.  This control also supports the concept of overlays where additional images can be dynamically add/update/deleted from the main graphic which also allows for dynamic animation via message.  Overlay messages should be in the car portion of the message and can be a dictionary with the following keys: filename (full path), x, y, and an optional scalefactor.  A list of dictionaries can also be sent.  Overlays are keyed by filename so passing updates to x/y for an overlay will update it.  Setting any overlay file to x/y -1,-1 will remove it.
 
 **App Background** - While stylesheets can be used to change an app, that can be cumbersome if all you want is to change the background color or display a background graphic.  This drop-in control lets you do either or both.
 
