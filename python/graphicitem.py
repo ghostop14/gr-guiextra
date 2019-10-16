@@ -128,6 +128,11 @@ class GrGraphicItem(gr.sync_block, QLabel):
                 curOverlay = self.overlays[curkey]
                 try:
                     newOverlay = QPixmap(curkey)
+                    if 'scalefactor' in curOverlay:
+                        scale = curOverlay['scalefactor']
+                        w = newOverlay.width()
+                        h = newOverlay.height()
+                        newOverlay = newOverlay.scaled(int(w*scale),int(h*scale),Qtc.KeepAspectRatio)
                     painter.drawPixmap(curOverlay['x'],curOverlay['y'], newOverlay)
                 except Exception as e:
                     print("[GrGraphicsItem] Error adding overlay: %s" % str(e))
@@ -168,8 +173,8 @@ class GrGraphicItem(gr.sync_block, QLabel):
             w = super().width()
             h = super().height()
             
-            super().setPixmap(self.pixmap.scaled(w,h,Qtc.KeepAspectRatio))
+            self.pixmap = self.pixmap.scaled(w,h,Qtc.KeepAspectRatio)
         elif self.fixedSize and self.setWidth > 0 and self.setHeight > 0:
-            super().setPixmap(self.pixmap.scaled(self.setWidth,self.setHeight,Qtc.KeepAspectRatio))
+            self.pixmap = self.pixmap.scaled(self.setWidth,self.setHeight,Qtc.KeepAspectRatio)
 
-        
+        self.updateGraphic()

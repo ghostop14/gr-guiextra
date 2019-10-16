@@ -5,7 +5,7 @@ category: '[GUI Extra]'
 parameters:
 -   id: overlayList
     label: Overlay Dict or List(dict)
-    default: "[{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':10,'y':0,'scalefactor':1},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':20,'y':20,'scalefactor':2},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':30,'y':40,'scalefactor':2},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':40,'y':60,'scalefactor':2},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':50,'y':80,'scalefactor':2}]"
+    default: "[{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':10,'y':0,'scalefactor':1},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':20,'y':20,'scalefactor':2},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':30,'y':40,'scalefactor':2},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':40,'y':60,'scalefactor':3},{'filename':'/opt/sdr/gnuradio/gr-guiextra38/examples/exampleoverlay.png','x':50,'y':80,'scalefactor':4}]"
     hide: 'part'
 -   id: listDelay
     label: If List Send With Delay (sec)
