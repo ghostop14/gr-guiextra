@@ -74,7 +74,7 @@ templates:
         <%
             win = 'self._%s_msgdigctl_win'%id
         %>\
-        ${win} = guiextra.MsgDigitalNumberControl(lbl = ${lbl}, minFreqHz = ${minFreqHz}, maxFreqHz=${maxFreqHz}, parent=self,  ThousandsSeparator="${ThousandsSeparator}",backgroundColor="${relBackgroundColor}",fontColor="${relFontColor}", varCallback=self.set_${id},outputmsgname="${outputmsgname}")
+        ${win} = guiextra.MsgDigitalNumberControl(lbl = ${lbl}, minFreqHz = ${minFreqHz}, maxFreqHz=${maxFreqHz}, parent=self,  ThousandsSeparator="${ThousandsSeparator}",backgroundColor="${relBackgroundColor}",fontColor="${relFontColor}", varCallback=self.set_${id},outputmsgname="${outputmsgname}".replace("'",""))
         ${win}.setValue(${value})
         ${win}.setReadOnly(${readOnly})
         self.${id} = ${win}
