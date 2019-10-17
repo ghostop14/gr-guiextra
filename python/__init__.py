@@ -37,6 +37,7 @@ from .compass import GrCompass
 from .togglebutton import ToggleButton
 from .msgpushbutton import MsgPushButton
 from .distanceradar import DistanceRadar
+from .azelplot import AzElPlot
 from .msgcheckbox import MsgCheckBox
 from .digitalnumbercontrol import MsgDigitalNumberControl
 from .dialcontrol import GrDialControl

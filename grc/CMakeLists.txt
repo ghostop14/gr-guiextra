@@ -23,6 +23,7 @@ install(FILES
     guiextra_togglebutton.block.yml
     guiextra_toggleswitch.block.yml
     guiextra_msgpushbutton.block.yml
+    guiextra_azelplot.block.yml
     guiextra_distanceradar.block.yml
     guiextra_msgcheckbox.block.yml
     guiextra_msgdigitalnumbercontrol.block.yml

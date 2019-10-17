@@ -1,0 +1,54 @@
+id: variable_qtgui_azelplot
+label: QT GUI Az-El Plot
+category: '[GUI Extra]'
+flags: [ show_id, python ]
+
+parameters:
+-   id: label
+    label: Label
+    dtype: string
+    hide: ${ ('none' if label else 'part') }
+-   id: backgroundColor
+    label: Background
+    dtype: enum
+    default: 'white'
+    options: ['black', 'white', 'blue', 'red', 'green', 'yellow']
+    option_labels: ['black', 'white', 'blue', 'red', 'green', 'yellow']
+    hide: 'part'
+-   id: dotColor
+    label: Dot Color
+    dtype: enum
+    default: 'ro'
+    options: ['bo', 'go', 'ro', 'co', 'mo', 'yo', 'ko', 'wo']
+    option_labels: ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'white']
+    hide: 'part'
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
+
+inputs:
+-   domain: message
+    id: azel
+    optional: false
+
+templates:
+    imports: import guiextra
+    var_make: self.${id} = None
+    make: |-
+        <%
+            win = '_distance_radar_%s'%id
+        %>\
+        ${win} = guiextra.AzElPlot(${label}, "${backgroundColor}", "${dotColor}", self)
+        self.${id} = ${win}
+
+        ${gui_hint() % win}
+ 
+documentation: |-
+    This block creates a radar-like screen used to represent distance or size.  This can be used in many ways such as circles closer to the center are closer, or just the opposite where closer to the center is smaller.
+
+    Note: Incoming values should range between 0 (center bullseye) and 100 (all the way out)
+
+    The GUI hint can be used to position the widget within the application. The hint is of the form [tab_id@tab_index]: [row, col, row_span, col_span]. Both the tab specification and the grid position are optional.
+
+file_format: 1

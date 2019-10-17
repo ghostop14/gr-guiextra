@@ -37,6 +37,7 @@ GR_PYTHON_INSTALL(
     msgpushbutton.py
     msgcheckbox.py
     distanceradar.py
+    azelplot.py
     digitalnumbercontrol.py
     dialcontrol.py
     ledindicator.py
