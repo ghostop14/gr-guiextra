@@ -11,10 +11,6 @@ parameters:
 -   id: ticklabels
     label: Ring Labels
     default: ['20', '40', '60', '80', '100']
--   id: gui_hint
-    label: GUI Hint
-    dtype: gui_hint
-    hide: part
 -   id: backgroundColor
     label: Background
     dtype: enum
@@ -36,6 +32,10 @@ parameters:
     options: ['red', 'white', 'black', 'blue', 'green', 'yellow']
     option_labels: ['red', 'white', 'black', 'blue', 'green', 'yellow']
     hide: 'part'
+-   id: gui_hint
+    label: GUI Hint
+    dtype: gui_hint
+    hide: part
 
 inputs:
 -   domain: message
