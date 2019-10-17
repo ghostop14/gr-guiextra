@@ -31,7 +31,7 @@ import pmt
 
 class DistanceRadar(gr.sync_block, FigureCanvas):
     def __init__(self, lbl, ticklabels, backgroundColor, fontColor, ringColor, Parent=None, width=4, height=4, dpi=100):
-        gr.sync_block.__init__(self, name = "MsgPushButton", in_sig = None, out_sig = None)
+        gr.sync_block.__init__(self, name = "distanceradar", in_sig = None, out_sig = None)
         
         self.lbl = lbl
         
