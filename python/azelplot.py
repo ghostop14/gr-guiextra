@@ -72,7 +72,7 @@ class AzElPlot(gr.sync_block, FigureCanvas):
         
         # self.axes.set_yticklabels(ticklabels, color=self.dotColor)
         self.axes.set_yticklabels([], color=self.scaleColor)
-        self.axes.set_xticklabels([], color=self.scaleColor)
+        self.axes.set_xticklabels(['0','315','270','225','180','135','90', '45'], color=self.scaleColor)
         # plt.show()
         # -----------------------------------------------------------
         FigureCanvas.__init__(self, self.fig)
@@ -87,20 +87,25 @@ class AzElPlot(gr.sync_block, FigureCanvas):
         FigureCanvas.updateGeometry(self)
 
     def msgHandler(self, msg):
+        newVal = None
+        
         try:    
             newVal = pmt.to_python(pmt.car(msg))
-
-            if type(newVal) == dict:
-                if 'az' in newVal and 'el' in newVal:
-                    # print("Received az/el: " + str(newVal['az']) + " " + str(newVal['el']))
-                    self.updateData(newVal['az'],newVal['el'])
+            if newVal is not None:
+                if type(newVal) == dict:
+                    if 'az' in newVal and 'el' in newVal:
+                        # print("Received az/el: " + str(newVal['az']) + " " + str(newVal['el']))
+                        self.updateData(float(newVal['az']),float(newVal['el']))
+                    else:
+                        print("[AzElPlot] Error: az and el keys were not found in the dictionary.")
                 else:
-                    print("[AzElPlot] Error: az and el keys were not found in the dictionary.")
+                    print("[AzElPlot] Error: Value received was not a dictionary.  Expecting a dictionary in the car message component with az and el keys.")
             else:
-                print("[AzElPlot] Error: Value received was not a dictionary.  Expecting a dictionary in the car message component with az and el keys.")
-                
+                print("[AzElPlot] Error: The CAR section of the inbound message was None.  This part should contain the dictionary with 'az' and 'el' float keys.")
         except Exception as e:
             print("[AzElPlot] Error with message conversion: %s" % str(e))
+            if newVal is not None:
+                print(str(newVal))
         
     def updateData(self, azimuth, elevation):
         if self.reddot is not None:
@@ -115,8 +120,13 @@ class AzElPlot(gr.sync_block, FigureCanvas):
                 
             convertedElevation = 90.0 - elevation
             # Note: +azimuth for the plot is measured counter-clockwise, so need to reverse it.
-            self.reddot = self.axes.plot(-azimuth * math.pi/180.0,convertedElevation,self.dotColor)
+            self.reddot = self.axes.plot(-azimuth * math.pi/180.0,convertedElevation,self.dotColor, markersize=8)
             # self.reddot = self.axes.plot(-azimuth * math.pi/180.0,convertedElevation,'ro')
-
+        else:
+            # It's below the horizon.  Show an open circle at the perimeter
+            elevation = 0.0
+            color = self.dotColor[0]
+            self.reddot = self.axes.plot(-azimuth * math.pi/180.0,89.0,self.dotColor,markerfacecolor="None", markersize=16, fillstyle=None)
+            
         self.draw()
         

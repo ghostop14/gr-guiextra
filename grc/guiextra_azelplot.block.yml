@@ -11,9 +11,9 @@ parameters:
 -   id: backgroundColor
     label: Background
     dtype: enum
-    default: 'white'
-    options: ['black', 'white', 'blue', 'red', 'green', 'yellow']
-    option_labels: ['black', 'white', 'blue', 'red', 'green', 'yellow']
+    default: 'silver'
+    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
 -   id: dotColor
     label: Dot Color
@@ -45,9 +45,7 @@ templates:
         ${gui_hint() % win}
  
 documentation: |-
-    This block creates a radar-like screen used to represent distance or size.  This can be used in many ways such as circles closer to the center are closer, or just the opposite where closer to the center is smaller.
-
-    Note: Incoming values should range between 0 (center bullseye) and 100 (all the way out)
+    This block creates a polar plot with azimuth represented as the angle clockwise around the circle, and elevation represented as the radius.  90 degrees elevation is center (directly overhead), while the horizon (0 degrees) is the outside circe.  Note that if an elevation < 0 is provided, the marker will turn to an open circle on the perimeter at the specified azimuth angle.
 
     The GUI hint can be used to position the widget within the application. The hint is of the form [tab_id@tab_index]: [row, col, row_span, col_span]. Both the tab specification and the grid position are optional.
 
