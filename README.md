@@ -29,6 +29,8 @@ This OOT module set provides modernized and new GUI control capabilities for GNU
 
 **App Background** - While stylesheets can be used to change an app, that can be cumbersome if all you want is to change the background color or display a background graphic.  This drop-in control lets you do either or both.
 
+**Azimuth-Elevation Plot** - Similar to the Az/El plot in satellite trackers, this widget produces a similar screen that can be fed from gpredict-doppler's rotor block that outputs an az_el message.  This UI block is looking for a dictionary in the car part of a message with 'az' and 'el' float entries.
+
 **Distance "Radar"** - Similar to the old-school signal trackers, this widget produces a radar-like screen and draws a "contact" circle at a distance of your choosing controlled by an inbound message.
 
 ## Building
