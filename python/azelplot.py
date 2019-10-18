@@ -85,7 +85,7 @@ class AzElPlot(gr.sync_block, FigureCanvas):
                                    QtWidgets.QSizePolicy.Expanding,
                                    QtWidgets.QSizePolicy.Expanding)
         
-        self.setMinimumSize(230,230)
+        self.setMinimumSize(240,230)
         FigureCanvas.updateGeometry(self)
 
     def msgHandler(self, msg):
