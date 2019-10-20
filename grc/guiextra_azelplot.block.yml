@@ -11,9 +11,9 @@ parameters:
 -   id: backgroundColor
     label: Background
     dtype: enum
-    default: 'silver'
-    options: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
-    option_labels: ['silver', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    default: 'white'
+    options: ['#efefef', 'lightgray', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
+    option_labels: ['background gray','light gray', 'gray', 'black', 'white', 'red', 'green', 'blue', 'navy', 'yellow', 'orange', 'purple', 'lime', 'aqua', 'teal']
     hide: 'part'
 -   id: dotColor
     label: Dot Color

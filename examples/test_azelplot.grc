@@ -121,7 +121,7 @@ blocks:
 - name: variable_qtgui_azelplot_0
   id: variable_qtgui_azelplot
   parameters:
-    backgroundColor: white
+    backgroundColor: '#efefef'
     comment: ''
     dotColor: ro
     gui_hint: ''
