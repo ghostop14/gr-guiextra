@@ -36,6 +36,8 @@ This OOT module set provides modernized and new GUI control capabilities for GNU
 ## Building
 gr-lfast is available in the pybombs repository.  However to build gr-lfast from source, simply follow the standard module build process.  Git clone it to a directory, close GNURadio if you have it open, then use the following build steps:
 
+For the Digital Number Control, some folks have had some version issues with one PyQt field.  This should fix it: "sudo pip3 install PyQtChart"
+
 cd <clone directory>
 
 mkdir build
