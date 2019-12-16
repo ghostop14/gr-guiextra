@@ -263,6 +263,10 @@ class GrCompass(gr.sync_block, LabeledCompass):
             
         LabeledCompass.__init__(self, title, min_size, update_time, setDebug, needleType, position,backgroundColor)
         
+        self.last = time.time()
+        self.update_period = update_time
+        self.useMsg = usemsg
+        
         self.message_port_register_in(pmt.intern("angle"))
         self.set_msg_handler(pmt.intern("angle"), self.msgHandler)   
         
@@ -282,6 +286,9 @@ class GrCompass(gr.sync_block, LabeledCompass):
         super().setColors(backgroundColor, needleTip, needleBody, scaleColor)
         
     def work(self, input_items, output_items):
+        if self.useMsg:
+            return len(input_items[0])
+                    
         # Average inputs
         self.next_angle = numpy.mean(input_items[0])
 
