@@ -121,7 +121,8 @@ class DigitalNumberControl(QFrame):
         else:
             textstr = teststr
 
-        width=fm.horizontalAdvance(textstr)
+        #width=fm.horizontalAdvance(textstr)
+        width=fm.width(textstr)
         
         self.minwidth = width
         # print("min width: " + str(width))
@@ -157,7 +158,8 @@ class DigitalNumberControl(QFrame):
         else:
             textstr = str(self.getFrequency())
 
-        width=fm.horizontalAdvance(textstr)
+        #width=fm.horizontalAdvance(textstr)
+        width=fm.width(textstr)
         
         # So we know:
         # - the width of the text
