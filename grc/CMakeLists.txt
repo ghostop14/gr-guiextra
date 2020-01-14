@@ -19,6 +19,7 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
+    guiextra_AutoCorrelatorSink.block.yml
     guiextra_compass.block.yml
     guiextra_togglebutton.block.yml
     guiextra_toggleswitch.block.yml

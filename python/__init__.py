@@ -33,6 +33,7 @@ except ImportError:
 
 # import any pure python here
 #
+from .AutoCorrelatorSink import AutoCorrelatorSink
 from .compass import GrCompass
 from .togglebutton import ToggleButton
 from .msgpushbutton import MsgPushButton
