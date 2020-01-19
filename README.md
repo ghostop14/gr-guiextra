@@ -5,6 +5,8 @@ Modern and enhanced GUI widgets for GNU Radio 3.8+
 
 This OOT module set provides modernized and new GUI control capabilities for GNU Radio 3.8+.  The following blocks are currently implemented in this set:
 
+**Fast Auto-correlator** - This is a QT GUI ported version of the old WX-based Fast Auto-correlator.  This conversion makes this block GR 3.8/3.9-available.
+
 **Compass** - Provides an on-screen compass with 3 different choices for the needle (full, half, and -pi to pi with DoA uncertainty)
 
 **Dial** - Think of this as your volume dial control.  Supports both variables and messages.
