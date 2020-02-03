@@ -32,6 +32,7 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
+    AutoCorrelatorSink.py
     compass.py
     togglebutton.py
     msgpushbutton.py
