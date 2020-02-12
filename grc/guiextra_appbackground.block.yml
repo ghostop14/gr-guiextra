@@ -7,38 +7,6 @@ parameters:
 -   id: file
     label: File
     dtype: file_open
--   id: scaleImage
-    label: Scale Image
-    dtype: bool
-    default: 'False'
-    hide: 'part'
-
-templates:
-    imports: import PyQt5
-    make: |-
-        pxmap = PyQt5.QtGui.QPixmap(${file})
-        if ${scaleImage}:
-            bkgnd = pxmap.scaled(self.size(), PyQt5.QtCore.Qt.KeepAspectRatio)
-        else:
-            bkgnd = pxmap
-
-        palette = PyQt5.QtGui.QPalette()
-        palette.setBrush(PyQt5.QtGui.QPalette.Background, bkgnd)
-        self.setPalette(palette)
-
-documentation: |-
-    This block sets the application window background to the specified graphic
-
-file_format: 1
-id: guiextra_grbackground
-label: QT GUI Background
-category: '[GUI Extra]'
-flags: [ python ]
-
-parameters:
--   id: file
-    label: File
-    dtype: file_open
 -   id: alignment
     label: Image Alignment
     dtype: enum
