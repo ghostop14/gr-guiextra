@@ -32,8 +32,12 @@ templates:
             bkcolor=""
 
         styleSht = self.styleSheet()
-                    
-        bkgnd="background-image: url(" + ${file} + "); background-repeat: repeat_n; background-position: " + "${alignment}" + ";"
+
+        if len(${file}) > 0:                    
+            bkgnd="background-image: url(" + ${file} + "); background-repeat: repeat_n; background-position: " + "${alignment}" + ";"
+        else:
+            bkgnd = ''
+        	
         styleSht += "QWidget{" + bkgnd + bkcolor + "}"
         
         self.setStyleSheet(styleSht)
