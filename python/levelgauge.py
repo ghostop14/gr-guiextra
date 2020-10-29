@@ -214,7 +214,7 @@ class GrLevelGauge(gr.sync_block, LabeledLevelGauge):
             if type(newVal) == float or type(newVal) == int:
                     super().setValue(newVal)
             else:
-                print("[LevelGauge] Error: Value received was not an int or a float: %s" % str(e))
+                print("[LevelGauge] Error: Value received was not an int or a float.")
                 
         except Exception as e:
             print("[LevelGauge] Error with message conversion: %s" % str(e))
