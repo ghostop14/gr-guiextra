@@ -1,4 +1,4 @@
-id: variable_qtgui_msgcheckbox
+id: guiextra_msgcheckbox
 label: QT GUI Msg CheckBox
 category: '[GUI Extra]'
 flags: [ show_id, python ]

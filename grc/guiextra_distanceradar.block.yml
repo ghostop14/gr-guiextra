@@ -1,4 +1,4 @@
-id: variable_qtgui_distanceradar
+id: guiextra_distanceradar
 label: QT GUI Distance Radar
 category: '[GUI Extra]'
 flags: [ show_id, python ]

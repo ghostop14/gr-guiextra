@@ -1,4 +1,4 @@
-id: variable_qtgui_azelplot
+id: guiextra_azelplot
 label: QT GUI Az-El Plot
 category: '[GUI Extra]'
 flags: [ show_id, python ]
