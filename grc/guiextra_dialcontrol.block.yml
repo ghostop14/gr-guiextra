@@ -1,4 +1,4 @@
-id: variable_qtgui_dial_control
+id: guiextra_dial_control
 label: QT GUI Dial
 category: '[GUI Extra]'
 flags: [ show_id, python ]

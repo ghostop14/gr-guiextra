@@ -1,4 +1,4 @@
-id: variable_qtgui_toggle_switch
+id: guiextra_toggle_switch
 label: QT GUI Toggle Switch
 category: '[GUI Extra]'
 flags: [ show_id, python ]

@@ -1,4 +1,4 @@
-id: variable_qtgui_msg_push_button
+id: guiextra_msg_push_button
 label: QT GUI Msg Push Button
 category: '[GUI Extra]'
 flags: [ show_id, python ]
