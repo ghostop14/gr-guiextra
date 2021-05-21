@@ -36,25 +36,18 @@ This OOT module set provides modernized and new GUI control capabilities for GNU
 **Distance "Radar"** - Similar to the old-school signal trackers, this widget produces a radar-like screen and draws a "contact" circle at a distance of your choosing controlled by an inbound message.
 
 ## Building
-gr-lfast is available in the pybombs repository.  However to build gr-lfast from source, simply follow the standard module build process.  Git clone it to a directory, close GNURadio if you have it open, then use the following build steps:
+gr-guiextra is available in the pybombs repository.  However to build gr-guiextra from source, simply follow the standard module build process.  Close GNURadio if you have it open; then use the following build steps:
 
-cd <clone directory>
+    cd
+    git clone https://github.com/ghostop14/gr-guiextra.git
+    cd ~/gr-guiextra
+    git checkout maint-3.8  # for version 3.8
+    mkdir build
+    cd build
+    cmake ../
+    make
+    sudo make install
+    sudo ldconfig
 
-mkdir build
-
-cd build
-
-cmake ..
-
-make
-
-[sudo] make install
-
-sudo ldconfig
-
-If each step was successful (do not overlook the "sudo ldconfig" step).
-
-
-
-
+**Do not overlook the "sudo ldconfig" step!**
 
